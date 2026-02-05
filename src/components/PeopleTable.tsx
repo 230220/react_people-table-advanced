@@ -17,6 +17,18 @@ export const PeopleTable: React.FC<Props> = ({
   sort,
   order,
 }) => {
+  const getSortParams = (column: string) => {
+    if (sort !== column) {
+      return { sort: column, order: null };
+    }
+
+    if (!order) {
+      return { sort: column, order: 'desc' };
+    }
+
+    return { sort: null, order: null };
+  };
+
   return (
     <>
       <table
@@ -28,15 +40,7 @@ export const PeopleTable: React.FC<Props> = ({
             <th>
               <span className="is-flex is-flex-wrap-nowrap">
                 Name
-                <SearchLink
-                  params={
-                    sort !== 'name'
-                      ? { sort: 'name', order: null }
-                      : order !== 'desc'
-                        ? { sort: 'name', order: 'desc' }
-                        : { sort: null, order: null }
-                  }
-                >
+                <SearchLink params={getSortParams('name')}>
                   <span className="icon">
                     <i className="fas fa-sort" />
                   </span>
@@ -47,7 +51,7 @@ export const PeopleTable: React.FC<Props> = ({
             <th>
               <span className="is-flex is-flex-wrap-nowrap">
                 Sex
-                <SearchLink params={{ sort: sort === 'sex' ? '-sex' : 'sex' }}>
+                <SearchLink params={getSortParams('sex')}>
                   <span className="icon">
                     <i className="fas fa-sort" />
                   </span>
@@ -58,9 +62,7 @@ export const PeopleTable: React.FC<Props> = ({
             <th>
               <span className="is-flex is-flex-wrap-nowrap">
                 Born
-                <SearchLink
-                  params={{ sort: sort === 'born' ? '-born' : 'born' }}
-                >
+                <SearchLink params={getSortParams('born')}>
                   <span className="icon">
                     <i className="fas fa-sort-up" />
                   </span>
@@ -71,9 +73,7 @@ export const PeopleTable: React.FC<Props> = ({
             <th>
               <span className="is-flex is-flex-wrap-nowrap">
                 Died
-                <SearchLink
-                  params={{ sort: sort === 'died' ? '-died' : 'died' }}
-                >
+                <SearchLink params={getSortParams('died')}>
                   <span className="icon">
                     <i className="fas fa-sort" />
                   </span>
