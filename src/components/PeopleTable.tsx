@@ -8,12 +8,14 @@ type Props = {
   people: Person[];
   selectedSlug?: string;
   sort?: string | null;
+  order?: string | null;
 };
 
 export const PeopleTable: React.FC<Props> = ({
   people,
   selectedSlug,
   sort,
+  order,
 }) => {
   return (
     <>
@@ -27,7 +29,13 @@ export const PeopleTable: React.FC<Props> = ({
               <span className="is-flex is-flex-wrap-nowrap">
                 Name
                 <SearchLink
-                  params={{ sort: sort === 'name' ? '-name' : 'name' }}
+                  params={
+                    sort !== 'name'
+                      ? { sort: 'name', order: null }
+                      : order !== 'desc'
+                        ? { sort: 'name', order: 'desc' }
+                        : { sort: null, order: null }
+                  }
                 >
                   <span className="icon">
                     <i className="fas fa-sort" />

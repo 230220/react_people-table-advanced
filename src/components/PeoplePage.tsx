@@ -19,6 +19,7 @@ export const PeoplePage = () => {
   const centuries = searchParams.getAll('centuries');
   const sex = searchParams.get('sex');
   const sort = searchParams.get('sort');
+  const order = searchParams.get('order');
 
   useEffect(() => {
     setIsLoading(true);
@@ -56,35 +57,31 @@ export const PeoplePage = () => {
   }
 
   if (sort === 'name') {
-    visiblePeople.sort((a, b) => a.name.localeCompare(b.name));
-  }
-
-  if (sort === '-name') {
-    visiblePeople.sort((a, b) => b.name.localeCompare(a.name));
+    visiblePeople.sort((a, b) =>
+      order === 'desc'
+        ? b.name.localeCompare(a.name)
+        : a.name.localeCompare(b.name),
+    );
   }
 
   if (sort === 'sex') {
-    visiblePeople.sort((a, b) => a.sex.localeCompare(b.sex));
-  }
-
-  if (sort === '-sex') {
-    visiblePeople.sort((a, b) => b.sex.localeCompare(a.sex));
+    visiblePeople.sort((a, b) =>
+      order === 'desc'
+        ? b.sex.localeCompare(a.sex)
+        : a.sex.localeCompare(b.sex),
+    );
   }
 
   if (sort === 'born') {
-    visiblePeople.sort((a, b) => a.born - b.born);
-  }
-
-  if (sort === '-born') {
-    visiblePeople.sort((a, b) => b.born - a.born);
+    visiblePeople.sort((a, b) =>
+      order === 'desc' ? b.born - a.born : a.born - b.born,
+    );
   }
 
   if (sort === 'died') {
-    visiblePeople.sort((a, b) => a.died - b.died);
-  }
-
-  if (sort === '-died') {
-    visiblePeople.sort((a, b) => b.died - a.died);
+    visiblePeople.sort((a, b) =>
+      order === 'desc' ? b.died - a.died : a.died - b.died,
+    );
   }
 
   return (
@@ -126,6 +123,7 @@ export const PeoplePage = () => {
                   people={visiblePeople}
                   selectedSlug={slug}
                   sort={sort}
+                  order={order}
                 />
               )}
             </div>
